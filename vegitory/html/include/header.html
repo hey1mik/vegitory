@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title> VEGITORY :: 산뜻한 식단 </title>
+	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+	<style type="text/css">
+		div.header_wrap {
+			width: 100%;
+			background-color: white;
+			box-shadow: 0 0 10px 10px rgba(20,23,28,0.03), 0 3px 1px 0 rgba(20,23,28,0.03);
+			z-index: 999;
+		}
+		div.header_content {
+			width: 1400px;
+			margin: 0 auto;
+			height: 65px;
+			box-sizing: border-box;
+			border-left: 1px solid #9E9AA2;
+			border-right: 1px solid #9E9AA2;
+			background-color: white;
+			display:flex;
+			justify-content: space-between; /*가로여백 맞추기*/
+			align-items: center;
+		}
+
+		.header_content_logo {background-color:red;}
+		.header_content_search {background-color:blue;}
+		.header_content_nav {background-color:green;}
+		.header_content_member{background-color:yellow;}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="header_wrap">
+			<!-- wrap : 모니터 사이즈 상관없게 하려고 백그라운드로 깔아두는 것. wrap충돌 때문에 앞에 header를 붙여주는 것 -->
+			<div class="header_content">
+				<div class="header_content_logo">
+					<img src="../../img/free_horizontal_on_white_by_logaster.png">
+					<span>베지토리</span>
+				</div>
+				<div class="header_content_search">물음표</div>
+				<div class="header_content_nav">
+					<a href="#">소개</a>
+					<a href="#">레시피</a>
+					<a href="#">커뮤니티</a>
+				</div>
+				<div class="header_content_member">
+					<a href="#">로그인</a>
+					<a href="#">회원가입</a>
+				</div>
+		</div>
+	</header>
+</body>
+</html>
