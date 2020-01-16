@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<script src="https://kit.fontawesome.com/3062584ccb.js" crossorigin="anonymous"></script>
 	<title> VEGITORY :: 산뜻한 식단 </title>
 	<link rel="stylesheet" type="text/css" href="../../css/common.css">
 	<style type="text/css">
@@ -16,18 +17,148 @@
 			margin: 0 auto;
 			height: 65px;
 			box-sizing: border-box;
-			border-left: 1px solid #9E9AA2;
-			border-right: 1px solid #9E9AA2;
 			background-color: white;
 			display:flex;
 			justify-content: space-between; /*가로여백 맞추기*/
 			align-items: center;
 		}
 
-		.header_content_logo {background-color:red;}
-		.header_content_search {background-color:blue;}
+		.header_content_logo {}
+		.header_content_search {}
+		.header_content_search_group {
+			display: flex;
+			align-items: center;
+			background-color: #f2f3f5;
+			border-radius: 2px;
+		}
 		.header_content_nav {background-color:green;}
-		.header_content_member{background-color:yellow;}
+		.header_content_member{
+			/*width: 160px;*/
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-direction: row; /*default(생략가능)*/
+		}
+		.header_content_member > div {
+			padding: 10px 0px 10px 3px;
+		}
+		.header_content_member_mypage {
+			position: relative;
+		}
+		.header_content_member_mypage > a {
+			display: inline-block;
+			padding: 12px 15px;
+			font-weight: 400;
+			border-radius: 2px;
+			height: 45px;
+			color: #506763;
+			line-height: 19px;
+			font-size: 14px;
+
+		}
+		.header_content_member_mypage > a:hover {
+			background-color: transparent;
+			border-color: #506763;
+		}
+		.header_content_member_cart > a {
+			display: inline-block;
+			width: 45px;
+			height: 45px;
+			border-radius: 2px;
+			color: #506763;
+			border: 1px solid transparent;
+			text-align: center;
+			padding-top: 12px;
+			line-height: 19px; 
+		}
+		.header_content_member_first:hover .header_dropdown{
+			display:block;
+		}
+
+		.header_content_member_first:hover > a,
+		.header_content_member_cart:hover > a {
+			background-color: rgba(20,23,28,.05);
+			border-color: rgba(20,23,28,.05);
+		}
+		.header_content_logo_img {
+			width: 200px;
+			height: 65px;
+			padding-left: 20px;
+			font-size:30pt;
+			color: #3f6e58;
+		}
+		.header_content_search_btn {
+			color:white;
+			float: right;
+			width: 40px;
+			height: 40px;
+			border-color: transparent;
+			background-color: transparent;
+			cursor: pointer;
+			color:#3f6e58;
+			outline:none;
+			border-top-right-radius:2px;
+			border-bottom-right-radius: 2px;
+		}
+
+		.header_content_search_input {
+			background-color: transparent;
+			border-color: transparent;
+			border-radius: 2px;
+			padding: 10px 12px;
+			font-size: 13px;
+			width: 300px;
+			height: 40px;
+			color: #686f7a;
+			outline:none; /*input태그 focus시 파란테두리*/
+		}
+		.header_content_search_btn:hover {
+			background-color: #3f6e58;
+			color:white;
+		}
+		.header_dropdown_menu {
+			border-bottom-left-radius: 2px;
+			border-bottom-right-radius: 2px;
+			box-shadow: 0 4px 16px rgba(20,23,28,.25);
+			background-color:white;
+			padding: 10px 0;
+			
+		}
+		.header_dropdown_menu a {
+			display: inline-block;
+			font-size: 13px;
+			color: #505763;
+			text-align:center;
+			padding: 5px 15px; 
+			font-weight: 400;
+			position: relative;
+			z-index: 100;
+		}
+		.header_dropdown_menu a:hover {
+			color: #007791;
+			background-color: #f2f3f5;
+
+		}
+		.header_dropdown {
+			position: absolute;
+			top:37px;
+			left:0; 
+			display: none;
+		}
+		.arrow {
+			position:absolute;
+			top:-5px;
+			left:42px; 
+			width: 12px;
+			height: 12px;
+			background-color: red;
+			border-color: transparent transparent #fff transparent;
+			background-color: white;
+			transform: rotate(45deg);
+			z-index:99;
+		
+		}
+
 	</style>
 </head>
 <body>
@@ -36,18 +167,48 @@
 			<!-- wrap : 모니터 사이즈 상관없게 하려고 백그라운드로 깔아두는 것. wrap충돌 때문에 앞에 header를 붙여주는 것 -->
 			<div class="header_content">
 				<div class="header_content_logo">
-					<img src="../../img/free_horizontal_on_white_by_logaster.png">
-					<span>베지토리</span>
+					<a href="#">
+					<span class="header_content_logo_img">VEGI-TORY</span>
+					</a>
 				</div>
-				<div class="header_content_search">물음표</div>
+				<div class="header_content_search">
+					<form name="" action="" method="GET">
+						<div class="header_content_search_group">
+						<input type="text" placeholder="상품/레시피 재료 검색" name="keyword" class="header_content_search_input">
+						<button type="button" class="header_content_search_btn"><i class="fas fa-search"></i></button>
+						</div>
+					</form>
+				</div>
 				<div class="header_content_nav">
 					<a href="#">소개</a>
 					<a href="#">레시피</a>
 					<a href="#">커뮤니티</a>
 				</div>
 				<div class="header_content_member">
-					<a href="#">로그인</a>
-					<a href="#">회원가입</a>
+					<div>
+						<div class="header_content_member_cart">
+							<a href="#"><i class="fas fa-shopping-cart"></i></a>
+						</div>
+					</div>
+					<div>
+						<div class="header_content_member_first">
+							<div class="header_content_member_mypage">
+								<a href="#">마이페이지</a>
+								<div class="header_dropdown">
+									<div class="arrow"></div>
+										<ul class="header_dropdown_menu">
+											<li><a href="#">회원정보수정</a></li>
+											<li><a href="#">위시리스트</a></li>
+											<li><a href="#">최근주문정보</a></li>
+											<li><a href="#">등록게시글</a></li>
+											<li><a href="#">고객센터</a></li>
+										</ul>	
+								</div>
+							</div>
+					</div>
+				</div>
+					<div><button type="button" class="btn btn_basic">로그인</button></div>
+					<div><button type="button" class="btn btn_primary">회원가입</button></div>
 				</div>
 		</div>
 	</header>
