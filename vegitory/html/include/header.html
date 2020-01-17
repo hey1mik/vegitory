@@ -9,6 +9,7 @@
 		div.header_wrap {
 			width: 100%;
 			background-color: white;
+
 			box-shadow: 0 0 10px 10px rgba(20,23,28,0.03), 0 3px 1px 0 rgba(20,23,28,0.03);
 			z-index: 999;
 		}
@@ -31,7 +32,17 @@
 			background-color: #f2f3f5;
 			border-radius: 2px;
 		}
-		.header_content_nav {background-color:green;}
+		.header_content_nav { 
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width:267px;
+
+
+		}
+		.header_content_nav > div {
+			font-size: 20pt;
+		}
 		.header_content_member{
 			/*width: 160px;*/
 			display: flex;
@@ -42,12 +53,12 @@
 		.header_content_member > div {
 			padding: 10px 0px 10px 3px;
 		}
-		.header_content_member_mypage {
+		.header_content_dropdown_group {
 			position: relative;
 		}
-		.header_content_member_mypage > a {
+		.header_content_dropdown_group > a {
 			display: inline-block;
-			padding: 12px 15px;
+			padding: 14px 15px 12px 10px;
 			font-weight: 400;
 			border-radius: 2px;
 			height: 45px;
@@ -56,7 +67,7 @@
 			font-size: 14px;
 
 		}
-		.header_content_member_mypage > a:hover {
+		.header_content_dropdown_group > a:hover {
 			background-color: transparent;
 			border-color: #506763;
 		}
@@ -71,11 +82,11 @@
 			padding-top: 12px;
 			line-height: 19px; 
 		}
-		.header_content_member_first:hover .header_dropdown{
+		.header_content_dropdown_wrap:hover .header_dropdown{
 			display:block;
 		}
 
-		.header_content_member_first:hover > a,
+		.header_content_dropdown_wrap:hover > a,
 		.header_content_member_cart:hover > a {
 			background-color: rgba(20,23,28,.05);
 			border-color: rgba(20,23,28,.05);
@@ -122,9 +133,11 @@
 			box-shadow: 0 4px 16px rgba(20,23,28,.25);
 			background-color:white;
 			padding: 10px 0;
+			position: relative;
 			
 		}
 		.header_dropdown_menu a {
+			width: 150px;
 			display: inline-block;
 			font-size: 13px;
 			color: #505763;
@@ -137,18 +150,19 @@
 		.header_dropdown_menu a:hover {
 			color: #007791;
 			background-color: #f2f3f5;
-
+			position: relative;
 		}
 		.header_dropdown {
 			position: absolute;
-			top:37px;
+			top:45px;
 			left:0; 
 			display: none;
+
 		}
 		.arrow {
 			position:absolute;
 			top:-5px;
-			left:42px; 
+			left:5px; 
 			width: 12px;
 			height: 12px;
 			background-color: red;
@@ -158,7 +172,7 @@
 			z-index:99;
 		
 		}
-
+	
 	</style>
 </head>
 <body>
@@ -179,20 +193,62 @@
 						</div>
 					</form>
 				</div>
+
 				<div class="header_content_nav">
-					<a href="#">소개</a>
-					<a href="#">레시피</a>
-					<a href="#">커뮤니티</a>
-				</div>
-				<div class="header_content_member">
+
+					<div class="header_content_dropdown_wrap">
+						<div class="header_content_dropdown_group">
+						<a href="#" class="magicline">소개</a>
+							<div class="header_dropdown">
+								<div class="arrow"></div>
+									<ul class="header_dropdown_menu">
+										<li><a href="#">자유게시판</a></li>
+										<li><a href="#">QnA게시판</a></li>
+										<li><a href="#">Review게시판</a></li>
+									</ul>	
+							</div>
+						</div>
+					</div>
+
+					<div class="header_content_dropdown_wrap">
+						<div class="header_content_dropdown_group">
+							<a href="#" class="magicline">레시피</a>
+								<div class="header_dropdown">
+									<div class="arrow"></div>
+										<ul class="header_dropdown_menu">
+											<li><a href="#">한식</a></li>
+											<li><a href="#">양식</a></li>
+											<li><a href="#">중식</a></li>
+											<li><a href="#">일식</a></li>
+										</ul>	
+									</div>
+								</div>	
+							</div>
+
+					<div class="header_content_dropdown_wrap">
+						<div class="header_content_dropdown_group">
+							<a href="#" class="magicline">커뮤니티</a>
+								<div class="header_dropdown">
+									<div class="arrow"></div>
+										<ul class="header_dropdown_menu">
+											<li><a href="#">자유게시판</a></li>
+											<li><a href="#">QnA게시판</a></li>
+											<li><a href="#">Review게시판</a></li>
+										</ul>	
+								</div>
+							</div>
+						</div>	
+				</div>	
+
+					<div class="header_content_member">
 					<div>
 						<div class="header_content_member_cart">
 							<a href="#"><i class="fas fa-shopping-cart"></i></a>
 						</div>
 					</div>
 					<div>
-						<div class="header_content_member_first">
-							<div class="header_content_member_mypage">
+						<div class="header_content_dropdown_wrap">
+							<div class="header_content_dropdown_group">
 								<a href="#">마이페이지</a>
 								<div class="header_dropdown">
 									<div class="arrow"></div>
@@ -210,6 +266,10 @@
 					<div><button type="button" class="btn btn_basic">로그인</button></div>
 					<div><button type="button" class="btn btn_primary">회원가입</button></div>
 				</div>
+				</div>
+				
+				</div>
+				
 		</div>
 	</header>
 </body>

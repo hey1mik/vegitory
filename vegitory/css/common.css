@@ -76,3 +76,16 @@ button.btn_support:hover {
 	border: 1px solid #E9E4BE;
 	border-color: transparent;
 }
+
+	/*text에 밑줄 쳐지는 효과*/
+.magicline::after {
+	content : '';
+	display: block;
+	width: 0;
+	height: 1px;
+	background-color:#3d3d3d;
+	transition: width .3s;
+}
+.magicline:hover:after {
+	width:100%;
+}
