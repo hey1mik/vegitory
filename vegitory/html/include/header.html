@@ -169,13 +169,139 @@
 			border-color: transparent transparent #fff transparent;
 			background-color: white;
 			transform: rotate(45deg);
-			z-index:99;
-		
+			z-index:99;	
 		}
 	
+		/*모달 로그인 창*/
+		.modal_wrap {
+			position: fixed;
+			z-index: 1000;
+			background-color: rgba(0,0,0,0.4);
+			overflow: auto;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.modal_content {
+			width: 445px;
+			height: 350px;
+			background-color: white;
+			box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),
+						0 4px 20 px 0 rgba(0,0,0,0.19);
+			border-radius: 2px;
+			padding: 15px; 
+			box-sizing: border-box;
+			overflow: hidden;
+		}
+		.welcome {
+			width: 100%;
+			text-align: center;
+			padding: 10px;
+			margin-bottom: 20px; 
+
+		}
+		
+		.login_section {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			margin-bottom: 20px;
+		}
+		.id_option {
+			display: flex;
+			justify-content: space-around;
+			margin-bottom: 20px;
+		}
+		.signup{
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+		.signup_notice{
+			font-size: 12px;
+			padding: 10px 0;
+		}
+		.singup_btn > a {
+			text-decoration: underline;
+		}
+		.div_input {
+			width: 270px;
+
+		}
+		.div_input input {
+			font-size: 15px;
+			color: #2F3138;
+			outline: none;
+			height: 35px;
+			border: 1px solid #2F3138;
+			width: 100%;
+			height: 40px;
+			border-radius: 2px;
+		}
+		.area {
+			height: 2px;
+		}
+		.login_btn > a{
+			padding: 35px; 
+			text-align: center;
+			align-items: center;
+			border: 1px solid #2F3138;
+			margin: auto; 
+		}
 	</style>
 </head>
 <body>
+	<div class="modal_wrap">
+		<div class="modal_content">
+			<div class="welcome"><span id="login">LOGIN</span> </div>
+			<div class="login_section">
+				<div class="div_input">
+					<div class="div_id">
+						<input type="text" placeholder="아이디" class="input_login">
+					</div>
+					<div class="area"></div>
+					<div class="div_pw">
+						<input type="password" placeholder="비밀번호" class="input_login">
+					</div>	
+				</div>
+				<div class="login_btn"> 
+					<a href="#">로그인</a>
+				</div>	
+			</div>
+
+		<div class="id_option">
+			<div class="save_id">
+				<input type="checkbox" id="saveid">
+				<label for="loginck" class="label1"> &nbsp 아이디 저장하기</label>
+			</div>
+			<div class="forgot_id">
+				<a href="#" id="forgotid">아이디</a>
+				<span>/</span>
+				<a href="#" id="forgotpw">비밀번호</a> 
+				<span>찾기</span>
+			</div>	
+		</div>
+		
+		<div class="signup">
+			<div class="signup_notice">
+				VEGITORY에 로그인 하시려면 회원가입을 하셔야 합니다.<br>
+				VEGITORY 회원이 되시면 기본 포인트 적립, 리뷰 등록에 따른 보너스 포인트 적립, 이벤트 참여,
+				빠르고 친절한 고객상담 등 여러가지 혜택을 받으실 수 있습니다. 
+			</div>
+			<div class="singup_btn"> 
+				<a href="#">회원가입</a>
+			</div>	
+		</div>
+		
+		</div>
+	</div>
+
+
+
+
+
 	<header>
 		<div class="header_wrap">
 			<!-- wrap : 모니터 사이즈 상관없게 하려고 백그라운드로 깔아두는 것. wrap충돌 때문에 앞에 header를 붙여주는 것 -->
@@ -268,9 +394,8 @@
 				</div>
 				</div>
 				
-				</div>
+			</div>
 				
-		</div>
 	</header>
 </body>
 </html>
