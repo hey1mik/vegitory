@@ -32,6 +32,7 @@
 		}
 		.join_row {
 			margin: 10px;
+
 		}
 		.ps_box {
 			display: flex;
@@ -118,6 +119,37 @@
 			height: 15px;
 			margin-left: 10px;
 		}
+		.join_btn {
+			display: block;
+			margin: auto;
+			width: 300px;
+			height: 50px;
+			background-color: #3f6e58;
+			text-align: center;
+			line-height: 50px;
+			color: white;
+			font-weight: 7000; 
+			margin-top: 30px;
+		}
+		.zipcode {
+			width: 100%;
+			display: flex;
+			justify-content: flex-start;
+		}
+		#search_zipcode {
+			width: 200px;
+			height: 51px;
+			background-color: #3f6e58;
+			font-size: 12px;
+			color: white;
+			cursor: pointer;
+			font-weight: 8000;
+			text-align: center;
+			line-height: 51px;
+		}
+		.area {
+			height: 2px;
+		}
 	</style>
 </head>
 <body>
@@ -199,22 +231,28 @@
 						이벤트 및 혜택정보 카카오톡/SMS 수신동의 (선택)
 					</label>
 				</div>
+				<br>
 				<div class="join_row">
 					<span class="ps_box int_ad">
 						<input type="text" id="id" name="id" class="int" placeholder="주소">
 						<span class="input_notice"> 시, 군, 구 까지 입력 </span>
 					</span>
-				
+					<div class= area></div>
 					<span class="ps_box int_detail_ad">
 						<input type="text" id="id" name="id" class="int" placeholder="상세주소">
 						<span class="input_notice"> 나머지 주소 입력 </span>
 					</span>
-				
+					<div class= area></div>
+					<div class="zipcode"> 
 					<span class="ps_box int_zipcode">
 						<input type="text" id="id" name="id" class="int" placeholder="우편번호">
-						<span class="search_zipcode">우편번호 찾기 </span>
 					</span>
+					<div id="search_zipcode"> 우편번호 찾기 </div>
+					</div>
 					<br>
+				</div>
+				<div class="join_btn">
+					<a href="#">베지토리 회원가입</a>
 				</div>
 			</div>
 		</form>	
