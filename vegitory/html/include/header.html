@@ -300,7 +300,7 @@
 		.area {
 			height: 6px;
 		}
-		.login_btn{
+		.login_btn > button{
 
 			color: white;
 			border: 1px solid #3f6e58;
@@ -310,10 +310,10 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			cursor: pointer;
+			font-size: 15px;
 		}
-		.login_btn > a{
-			padding: 25px; 
-		}
+	
 		.save_id {
 			display: flex;
 			align-items: center;
@@ -345,23 +345,25 @@
 		<div class="modal_content">
 			<div class="login_close"><button><i class="fas fa-times"></i></button></div>
 			<div class="welcome"><span id="login">LOGIN</span> </div>
-			<div class="login_section">
-				<div class="div_input">
-					<div class="div_id">
-						<i class="far fa-user"></i>
-						<input type="text" placeholder="아이디" class="login_input" id="login_id">
+			<form>
+				<div class="login_section">
+					<div class="div_input">
+						<div class="div_id">
+							<i class="far fa-user"></i>
+							<input type="text" placeholder="아이디" required class="login_input" id="login_id">
+						</div>
+						<div class="area"></div>
+						<div class="div_id">
+							<i class="fas fa-unlock"></i>
+							<input type="password" placeholder="비밀번호" required minlength="6" maxlength="18" class="login_input" id="input_pw">
+							<span class="pw_eye"><i class="fas fa-eye-slash"></i></span>
+						</div>	
 					</div>
-					<div class="area"></div>
-					<div class="div_id">
-						<i class="fas fa-unlock"></i>
-						<input type="password" placeholder="비밀번호" class="login_input" id="input_pw">
-						<span class="pw_eye"><i class="fas fa-eye-slash"></i></span>
+					<div class="login_btn"> 
+						<button type="#">로그인</button>
 					</div>	
 				</div>
-				<div class="login_btn"> 
-					<a href="#">로그인</a>
-				</div>	
-			</div>
+		</form>
 
 		<div class="id_option">
 			<div class="save_id">
