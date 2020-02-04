@@ -397,8 +397,23 @@
 				//2. 유효성 체크하기
 				var result = joinValidate.checkPw(pw, rpw);
 				//3. 체크결과에 따라 디자인
+				if(result.code == 0) {
+					pwFlag = true;
+				} else {
+					pwFlag = false;
+				}
 				ckDesign(result.code, result.desc, 1,1);
-
+				if(result.code == 10) {
+					$('.ps_box:eq(2)').css('border','1px solid #3f6e58');
+					$('.warning:eq(2)').css('visibility','visible')
+										   .text('사용가능한 비밀번호입니다.')
+					                       .css('color','#3f6e58');
+				} else if(result.code == 6) {
+					$('.ps_box:eq(2)').css('border','1px solid #a48443');
+					$('.warning:eq(2)').css('visibility','visible')
+										     .text('입력하신 비밀번호가 일치하지 않습니다.')
+					                         .css('color','#a48443');
+				}
 			});	
 
 			//비밀번호 재확인 유효성 체크
@@ -407,15 +422,15 @@
 				var rpw = $.trim($('#urpw').val());
 				var result = joinValidate.checkRpw(pw, rpw, pwFlag);
 				ckDesign(result.code, result.desc, 2,2);
-				if(result.code == 10) {
+				if(pwFlag == true) {
 					$('.ps_box:eq(1)').css('border','1px solid #3f6e58');
 					$('.warning:eq(1)').css('visibility','visible')
-										   .text(result.desc)
+										   .text('사용가능한 비밀번호입니다.')
 					                       .css('color','#3f6e58');
 				} else if(result.code == 6) {
 					$('.ps_box:eq(1)').css('border','1px solid #a48443');
 					$('.warning:eq(1)').css('visibility','visible')
-										     .text(result.desc)
+										     .text('입력하신 비밀번호가 일치하지 않습니다.')
 					                         .css('color','#a48443');
 				}
 

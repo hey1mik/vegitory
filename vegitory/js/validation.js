@@ -39,7 +39,7 @@ var joinValidate = {
 			code: 0,
 			desc: '사용가능한 비밀번호입니다.'
 		},
-		success_pw: {
+		equal_success_pw: {
 			code: 10,
 			desc : '사용가능한 비밀번호입니다.'
 		},
