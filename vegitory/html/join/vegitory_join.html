@@ -82,7 +82,18 @@
 			padding: 10px 14px 10px 14px;
 			vertical-align: top; 
 		}
-		#uemail {
+		.email_box3 {
+			position: relative;
+			width: 210px;
+			height: 51px;
+			border: 1px solid #dadada;
+			padding: 10px;
+			vertical-align: top; 
+		}
+		#uemail1 {
+			border: none; 
+		}
+		#uemail2 {
 			border: none; 
 		}
 		input, select {
@@ -148,18 +159,19 @@
 			display: flex;
 			justify-content: flex-start;
 		}
-		#search_zipcode {
+		#btn_post {
 			width: 200px;
 			height: 51px;
 			background-color: #498268;
 			font-size: 12px;
 			color: white;
-			cursor: pointer;
 			font-weight: 500;
 			text-align: center;
 			line-height: 51px;
+			border:none;
+			cursor: pointer;
 		}
-		#search_zipcode:hover {
+		#btn_post:hover {
 			background-color:#3f6e58;
 		}
 		.area {
@@ -254,7 +266,7 @@
 				
 				<div class="join_row">
 					<span class="ps_box int_id">
-						<input type="password" id="urpw" name="urpw" class="int" placeholder="비밀번호 재확인">
+						<input type="text" id="urpw" name="urpw" class="int" placeholder="비밀번호 재확인">
 					</span>
 					<div class="warning"> *필수입력사항입니다. </div>
 				</div>
@@ -271,13 +283,13 @@
 
 				<div id="wrap_email">
 					<div class="email_box">
-						<input type="text" id="uemail" name="uemail" placeholder="이메일">
+						<input type="text" id="uemail1" name="uemail" placeholder="이메일">
 					</div>
 					<span> @ </span>
 					<div class="email_box2">
-						<input type="text" id="uemail" placeholder="Email 선택">
+						<input type="text" id="uemail2" placeholder="Email 선택">
 					</div>
-					<div class="email_box">
+					<div class="email_box3">
 						<select id="selmail">
 						<option value="" selected="selected">Email 선택</option>
 						<option value="directVal">직접입력</option>
@@ -311,24 +323,21 @@
 				</div>
 				<div class="warning warning2">*필수입력사항입니다. </div>
 				<div class="join_row">
-					<span class="ps_box int_ad">
-						<input type="text" id="id" name="id" class="int" placeholder="주소">
-						<span class="input_notice"> 시, 군, 구 까지 입력 </span>
-					</span>
-					<div class="warning"> *필수입력사항입니다. </div>
-					<div class= area></div>
-					<span class="ps_box int_detail_ad">
-						<input type="text" id="id" name="id" class="int" placeholder="상세주소">
-						<span class="input_notice"> 나머지 주소 입력 </span>
-					</span>
-					<div class="warning"> *필수입력사항입니다. </div>
-					<div class= area></div>
 					<div class="zipcode"> 
 					<span class="ps_box int_zipcode">
-						<input type="text" id="id" name="id" class="int" placeholder="우편번호">
+					<input type="text" id="sample6_postcode"
+						   name="id" class="addr_only int" placeholder="우편번호" readonly value="12345">
 					</span>
-					<div id="search_zipcode"> 우편번호 찾기 </div>
+					<input type="button" id="btn_post" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 					</div>
+					<div class= area></div>
+					<span class="ps_box int_ad">
+					<input type="text" id="sample6_address" name="id" class="addr_only int" placeholder="주소" readonly><br>
+					</span>
+					<div class= area></div>
+					<span class="ps_box int_detail_ad">
+					<input type="text" id="sample6_detailAddress" name="id" class="int" placeholder="상세주소">
+					</span>
 					<div class="warning"> *필수입력사항입니다. </div>
 				</div>
 				
@@ -362,6 +371,9 @@
 <script src="../../js/validation.js"></script>
 <script type="text/javascript">
 		$(function(){
+			//비밀번호가 유효한 값인지 체크해주는 Flag값
+			var pwFlag = false;
+
 			//정규식
 			//id 유효성 체크:
 			$('#uid').keyup(function(){
@@ -379,27 +391,197 @@
 
 			//비밀번호 유효성 체크
 			$('#upw').keyup(function(){
-				var pw = $.trim($(this).val());
-				var result = joinValidate.checkPw(pw);
+				//1. 사용자가 입력한 값 받기
+				var pw = $.trim($('#upw').val());
+				var rpw = $.trim($('#urpw').val());
+				//2. 유효성 체크하기
+				var result = joinValidate.checkPw(pw, rpw);
+				//3. 체크결과에 따라 디자인
 				ckDesign(result.code, result.desc, 1,1);
+
+			});	
+
+			//비밀번호 재확인 유효성 체크
+			$('#urpw').keyup(function(){
+				var pw = $.trim($('#upw').val());
+				var rpw = $.trim($('#urpw').val());
+				var result = joinValidate.checkRpw(pw, rpw, pwFlag);
+				ckDesign(result.code, result.desc, 2,2);
+				if(result.code == 10) {
+					$('.ps_box:eq(1)').css('border','1px solid #3f6e58');
+					$('.warning:eq(1)').css('visibility','visible')
+										   .text(result.desc)
+					                       .css('color','#3f6e58');
+				} else if(result.code == 6) {
+					$('.ps_box:eq(1)').css('border','1px solid #a48443');
+					$('.warning:eq(1)').css('visibility','visible')
+										     .text(result.desc)
+					                         .css('color','#a48443');
+				}
+
 			});
+
+			// 이름 유효성 체크
+			$('#uname').keyup(function(){
+				var name = $.trim($(this).val());
+				var result = joinValidate.checkName(name);
+				ckDesign(result.code, result.desc, 3,3);
+			});
+
+			// 전화번호 유효성 체크
+			$('#uphone').keyup(function(){
+				var phone = $.trim($(this).val());
+				var result = joinValidate.checkPhone(phone);
+				ckDesign(result.code, result.desc, 4,5);
+				if(code == 0) {
+					$('.ps_box:eq('+line+')').css('border','1px solid #3f6e58');
+
+				} else {
+					$('.ps_box:eq('+line+')').css('border','1px solid #a48443');
+				}
+			});
+
+			// 이메일 유효성 체크
+			$('#uemail1').keyup(function(){
+				var email1 = $.trim($(this).val());
+				var result = joinValidate.checkEmail1(email1);
+				if(result.code == 0) {
+					$('.email_box').css('border','1px solid #3f6e58');
+					$('.warning:eq(4)').css('visibility','visible')
+										     .text(result.desc)
+					                         .css('color','#3f6e58');
+
+				} else {
+					$('.email_box').css('border','1px solid #a48443');
+					$('.warning:eq(4)').css('visibility','visible')
+										     .text(result.desc)
+					                         .css('color','#a48443');
+				}
+			});
+
+			$('#uemail2').keyup(function(){
+				var email2 = $.trim($(this).val());
+				var result = joinValidate.checkEmail2(email2);	
+				if(result.code == 0) {
+					$('.email_box2').css('border','1px solid #3f6e58');
+					$('.warning:eq(4)').css('visibility','visible')
+										     .text(result.desc)
+					                         .css('color','#3f6e58');
+				} else {
+					$('.email_box2').css('border','1px solid #a48443');
+					$('.warning:eq(4)').css('visibility','visible')
+										     .text(result.desc)
+					                         .css('color','#a48443');
+				}
+			});
+
+			$('.addr_only').click(function(){
+				$('#btn_post').click();
+				//사용자가 우편번호 또는 주소 input을 클릭했을때!
+			});
+			$('#sample6_detailAddress').click(function(){
+				var addrPost = $('#sample6_postcode').val();
+
+				//if(addrPost == '' || addrPost.length == 0) {
+					//$('#btn_post').click();
+
+				//}
+			});
+
+			//주소 유효성 체크
+			$('#sample6_detailAddress').keyup(function(){
+				var addrDetail = $.trim($(this).val());
+				var addrPost = $('#sample6_postcode').val();
+				//console.log('우편번호: '+addrPost+', 상세주소: '+addrDetail);
+
+				var result = joinValidate.checkAddr(addrDetail, addrPost);
+
+				if(result.code==3){// 우편번호 & 주소 x
+					ckDesign(result.code, result.desc, 5,6);
+					ckDesign(result.code, result.desc, 6,6);
+				} else if(result.code == 0) {
+					ckDesign(result.code, result.desc, 5, 6);
+					ckDesign(result.code, result.desc, 6, 6);
+					ckDesign(result.code, result.desc, 7, 6)
+				} else if(result.code==4) { // 상세주소 x
+					ckDesign(result.code, result.desc, 7,6);
+				} else if(result.code==5) {
+					ckDesign(result.code, result.desc, 7,6);
+				}
+			});
+
+
 		});
 
+
 			function ckDesign(code, desc, line, msg) { // 유효성 체크 통과 못한애	
-					if(code !=0) {
-					$('.ps_box:eq('+line+')').css('border','1px solid #a48443');
+					if(code ==0 || code == 10) {
+					$('.ps_box:eq('+line+')').css('border','1px solid #3f6e58');
 					$('.warning:eq('+msg+')').css('visibility','visible')
 										   .text(desc)
-					                       .css('color','#a48443');
+					                       .css('color','#3f6e58');
 					        return false;
 					
 				} else { //유효성 체크 통과한애
-					$('.ps_box:eq('+line+')').css('border','1px solid #3f6e58');
+					$('.ps_box:eq('+line+')').css('border','1px solid #a48443');
 					$('.warning:eq('+msg+')').css('visibility','visible')
 										     .text(desc)
-					                         .css('color','#3f6e58');
+					                         .css('color','#a48443');
 					       return true;                   
 				}
 			}
+
+		
 	</script>
+
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
 </html>
