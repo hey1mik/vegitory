@@ -24,7 +24,7 @@
 		}
 		.section_wrap {
 			width: 100%;
-			height: 930px;
+			height: 920px;
 			background-color: white;
 			border-top: 3px solid #498268;
 			
@@ -50,7 +50,7 @@
 			vertical-align: top;
 			line-height: 30px;
 		}
-		.int {
+		.join_info_box_input{
 			display: block;
 			position: relative;
 			width: 415px;
@@ -139,17 +139,21 @@
 			height: 15px;
 			margin-left: 10px;
 		}
-		.join_btn > a {
+		.btn_primary {
+			background-color: #498268;
+			color: white;
+		}
+		#btn_join {
+			border: none; 
 			display: block;
 			margin: auto;
 			width: 250px;
 			height: 56px;
-			background-color:#498268;
 			text-align: center;
 			line-height: 56px;
-			color: white;
 			font-weight: 550; 
 			margin-top: 30px;
+			cursor: no-drop;
 		}
 		.join_btn > a:hover {
 			background-color:#3f6e58; 
@@ -248,7 +252,7 @@
 			<div class="row_group">
 				<div class="join_row">
 					<span class="ps_box int_id">
-						<input type="text" id="uid" name="uid" class="int" placeholder="아이디">
+						<input type="text" id="uid" name="uid" class="join_info_box_input" placeholder="아이디">
 						<span class="input_notice">3~15자의 영문/숫자를 조합하여 입력</span>
 					</span>
 					<div class="warning"> *필수입력사항입니다. </div>
@@ -257,7 +261,7 @@
 				
 				<div class="join_row">
 					<span class="ps_box int_id">
-						<input type="text" id="upw" name="upw" class="int" placeholder="비밀번호">
+						<input type="text" id="upw" name="upw" class="join_info_box_input" placeholder="비밀번호">
 						<span class="input_notice">8~16자의 영문/숫자를 조합하여 입력</span>
 					</span>
 					<div class="warning"> *필수입력사항입니다. </div>
@@ -266,7 +270,7 @@
 				
 				<div class="join_row">
 					<span class="ps_box int_id">
-						<input type="text" id="urpw" name="urpw" class="int" placeholder="비밀번호 재확인">
+						<input type="text" id="urpw" name="urpw" class="join_info_box_input" placeholder="비밀번호 재확인">
 					</span>
 					<div class="warning"> *필수입력사항입니다. </div>
 				</div>
@@ -274,7 +278,7 @@
 				
 				<div class="join_row">
 					<span class="ps_box int_id">
-						<input type="text" id="uname" name="uname" class="int" placeholder="이름">
+						<input type="text" id="uname" name="uname" class="join_info_box_input" placeholder="이름">
 						<span class="input_notice">한글 15자 영문 30자까지 가능합니다.</span>
 					</span>
 					<div class="warning"> *필수입력사항입니다. </div>
@@ -283,11 +287,11 @@
 
 				<div id="wrap_email">
 					<div class="email_box">
-						<input type="text" id="uemail1" name="uemail" placeholder="이메일">
+						<input type="text" id="uemail1" name="uemail" class="join_info_box_input2" placeholder="이메일">
 					</div>
 					<span> @ </span>
 					<div class="email_box2">
-						<input type="text" id="uemail2" placeholder="Email 선택">
+						<input type="text" id="uemail2" class="join_info_box_input2" placeholder="Email 선택">
 					</div>
 					<div class="email_box3">
 						<select id="selmail">
@@ -310,7 +314,7 @@
 				
 				<div class="join_row last_row">
 					<span class="ps_box int_id">
-						<input type="text" id="uphone" name="uphone" class="int" placeholder="휴대폰">
+						<input type="text" id="uphone" name="uphone" class="join_info_box_input" placeholder="휴대폰">
 						<span class="input_notice">-빼고 입력, 예) 01012345678 </span>
 					</span>
 					
@@ -326,24 +330,24 @@
 					<div class="zipcode"> 
 					<span class="ps_box int_zipcode">
 					<input type="text" id="sample6_postcode"
-						   name="id" class="addr_only int" placeholder="우편번호" readonly value="12345">
+						   name="id" class="addr_only join_info_box_input" placeholder="우편번호" readonly value="12345">
 					</span>
 					<input type="button" id="btn_post" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 					</div>
 					<div class= area></div>
 					<span class="ps_box int_ad">
-					<input type="text" id="sample6_address" name="id" class="addr_only int" placeholder="주소" readonly><br>
+					<input type="text" id="sample6_address" name="id" class="addr_only join_info_box_input" placeholder="주소" readonly><br>
 					</span>
 					<div class= area></div>
 					<span class="ps_box int_detail_ad">
-					<input type="text" id="sample6_detailAddress" name="id" class="int" placeholder="상세주소">
+					<input type="text" id="sample6_detailAddress" name="id" class="join_info_box_input" placeholder="상세주소">
 					</span>
 					<div class="warning"> *필수입력사항입니다. </div>
 				</div>
 				
 				
 				<div class="join_btn">
-					<a href="#">베지토리 회원가입</a>
+					<button type="button" id="btn_join">베지토리 회원가입</button>
 				</div>
 			</div>
 		</form>	
@@ -374,8 +378,12 @@
 			//비밀번호가 유효한 값인지 체크해주는 Flag값
 			var pwFlag = false;
 
-			//정규식
-			//id 유효성 체크:
+			// 유효성체크 여부를 알려주는 배열
+			var checkArr = new Array(6).fill(false);
+			//printCheckArr(checkArr);
+			var invalidAll = true;
+
+			//아이디 유효성 체크:
 			$('#uid').keyup(function(){
 				//사용자가 입력한 값의 좌우여백을 제거하고 id에 입력
 				var id = $(this).val().trim(); // 사용자가 입력한 값
@@ -383,6 +391,13 @@
 				// 결과를 result에 담음(code, desc) 
 				var result = joinValidate.checkId(id);	
 				
+				if(result.code == 0) {
+					checkArr[0] = 'true';
+				} else {
+					checkArr[0] = 'false';
+				}
+				printCheckArr(checkArr);
+
 				// 유효성체크 결과로 테두리색과 err메시지를 출력하는
 				// 함수 실행
 				ckDesign(result.code, result.desc, 0,0);
@@ -404,16 +419,19 @@
 				}
 				ckDesign(result.code, result.desc, 1,1);
 				if(result.code == 10) {
+					checkArr[1] = true;
 					$('.ps_box:eq(2)').css('border','1px solid #3f6e58');
 					$('.warning:eq(2)').css('visibility','visible')
 										   .text('사용가능한 비밀번호입니다.')
 					                       .css('color','#3f6e58');
 				} else if(result.code == 6) {
+					checkArr[1] = false;
 					$('.ps_box:eq(2)').css('border','1px solid #a48443');
 					$('.warning:eq(2)').css('visibility','visible')
 										     .text('입력하신 비밀번호가 일치하지 않습니다.')
 					                         .css('color','#a48443');
 				}
+				 printCheckArr(checkArr);
 			});	
 
 			//비밀번호 재확인 유효성 체크
@@ -421,18 +439,24 @@
 				var pw = $.trim($('#upw').val());
 				var rpw = $.trim($('#urpw').val());
 				var result = joinValidate.checkRpw(pw, rpw, pwFlag);
-				ckDesign(result.code, result.desc, 2,2);
-				if(pwFlag == true) {
+				if(result.code == 10) {
+					checkArr[1] = true;
 					$('.ps_box:eq(1)').css('border','1px solid #3f6e58');
 					$('.warning:eq(1)').css('visibility','visible')
 										   .text('사용가능한 비밀번호입니다.')
 					                       .css('color','#3f6e58');
 				} else if(result.code == 6) {
+					checkArr[1] = false;
 					$('.ps_box:eq(1)').css('border','1px solid #a48443');
 					$('.warning:eq(1)').css('visibility','visible')
 										     .text('입력하신 비밀번호가 일치하지 않습니다.')
 					                         .css('color','#a48443');
+				} else {
+					checkArr[1] = false;
 				}
+				  	printCheckArr(checkArr);
+				ckDesign(result.code, result.desc, 2,2);
+
 
 			});
 
@@ -441,6 +465,13 @@
 				var name = $.trim($(this).val());
 				var result = joinValidate.checkName(name);
 				ckDesign(result.code, result.desc, 3,3);
+				if(result.code == 0) {
+					checkArr[2] = true;
+				} else {
+					checkArr[2] = false;
+				}
+				printCheckArr(checkArr);
+				
 			});
 
 			// 전화번호 유효성 체크
@@ -448,11 +479,18 @@
 				var phone = $.trim($(this).val());
 				var result = joinValidate.checkPhone(phone);
 				ckDesign(result.code, result.desc, 4,5);
-				if(code == 0) {
-					$('.ps_box:eq('+line+')').css('border','1px solid #3f6e58');
+				if(result.code == 0) {
+					checkArr[3] = true;
+				} else {
+					checkArr[3] = false;
+				}
+				printCheckArr(checkArr);
+				
+				if(result.code == 0) {
+					$('.ps_box:eq(5)').css('border','1px solid #3f6e58');
 
 				} else {
-					$('.ps_box:eq('+line+')').css('border','1px solid #a48443');
+					$('.ps_box:eq(5)').css('border','1px solid #a48443');
 				}
 			});
 
@@ -460,6 +498,15 @@
 			$('#uemail1').keyup(function(){
 				var email1 = $.trim($(this).val());
 				var result = joinValidate.checkEmail1(email1);
+
+
+				if(result.code == 0) {
+					checkArr[3] = true;
+				} else {
+					checkArr[3] = false;
+				}
+				printCheckArr(checkArr);
+
 				if(result.code == 0) {
 					$('.email_box').css('border','1px solid #3f6e58');
 					$('.warning:eq(4)').css('visibility','visible')
@@ -477,6 +524,14 @@
 			$('#uemail2').keyup(function(){
 				var email2 = $.trim($(this).val());
 				var result = joinValidate.checkEmail2(email2);	
+
+				if(result.code == 0) {
+					checkArr[4] = true;
+				} else {
+					checkArr[4] = false;
+				}
+				printCheckArr(checkArr);
+
 				if(result.code == 0) {
 					$('.email_box2').css('border','1px solid #3f6e58');
 					$('.warning:eq(4)').css('visibility','visible')
@@ -523,6 +578,51 @@
 				} else if(result.code==5) {
 					ckDesign(result.code, result.desc, 7,6);
 				}
+
+				if(result.code == 0) {
+					checkArr[5] = true;
+				} else {
+					checkArr[5] = false;
+				}
+				printCheckArr(checkArr);
+			});
+
+			//회원가입 버튼 클릭!
+			$('#btn_join').click(function(){
+				var inavlidAll = true;
+				for(var i = 0; i < checkArr.length; i++) {
+					if(!checkArr[i]) {
+						invalidAll = false;
+					$('.warning:eq('+i+')').css('visibility','visible')
+										  .css('color','#a48443');	
+					} 
+				}
+				if(invalidAll) {
+					alert('회원가입 성공!');
+				} else {
+					alert('유효성 체크를 진행해주세요!')
+				}
+				//유효성체크가 전부 true이면
+				//하나라도 false이면
+			});
+			// 버튼 활성화
+			$('.join_info_box_input').blur(function(){
+				var checkAll = true;
+
+				for(var i=0; i < checkArr.length; i++){
+					if(!checkArr[i]) {
+						checkAll = false;
+					}
+				}
+				if(checkAll) {
+					$('#btn_join').addClass('btn_primary');
+					//$('#btn_join').prop('disabled',false);
+					$('#btn_join').css('cursor','pointer');
+				} else {
+					$('#btn_join').removeClass('btn_primary');
+					//$('#btn_join').prop('disabled',true);
+					$('#btn_join').css('cursor','no-drop');
+				}
 			});
 
 
@@ -543,6 +643,13 @@
 										     .text(desc)
 					                         .css('color','#a48443');
 					       return true;                   
+				}
+			}
+
+			//개발시 사용: 유효성 체크 전체여부를 출력해주는 함수(true, false) 
+			function printCheckArr(checkArr) {
+				for(var i=0; i<checkArr.length; i++) {
+					console.log(i + '번지: '+checkArr[i]);
 				}
 			}
 

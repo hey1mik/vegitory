@@ -152,10 +152,10 @@ var joinValidate = {
 				return this.resultCode.empty_val;
 			} else if(regHangle.test(pw)){//5. 한글사용 체크
 				return this.resultCode.hangle_pw; 
-			} else if(pw.match(regEmpty)) { // 2. 공백값이 있는지 체크
-				return this.resultCode.space_length_val;
 			} else if(!pw.match(regPw)) { //3. 유효한 비밀번호 체크
 			    return this.resultCode.invalid_pw;
+			} else if(pw.match(regEmpty)) { // 2. 공백값이 있는지 체크
+				return this.resultCode.space_length_val;
 			} else if(/(\w)\1\1\1/.test(pw)) { //4.같은 값이 4번 연속으로 사용됐는지 체크
 				return this.resultCode.stream_pw;
 			} else if(rpw != '' || rpw.length != 0) { // 6. 비밀번호 재확인 값이 있으면.??
@@ -164,8 +164,7 @@ var joinValidate = {
 			  } else {
 					return this.resultCode.other_pw;
 				}
-			}
-			else {
+			} else {
 			   return this.resultCode.success_pw;           
 			}	
 		},
@@ -173,11 +172,11 @@ var joinValidate = {
 		checkRpw : function(pw, rpw, pwFlag) {
 			if(rpw == '' || rpw.length == 0) { //1. 값이 있는지 체크
 				return this.resultCode.empty_val;
-			} else if(!pwFlag) { //2.pw가 올바를 때
-				return this.resultCode.invalid_pw;
 			} else if(pw == rpw && pwFlag) {
 				return this.resultCode.equal_success_pw;  
-			  	}
+			} else if(!pwFlag) { //2.비밀번호 유효성 체크
+				return this.resultCode.invalid_pw;
+			} 
 			  else {
 					return this.resultCode.other_pw;
 				}
@@ -191,7 +190,7 @@ var joinValidate = {
 			} else if(name.match(regEmpty)) { // 2. 공백유무
 				return this.resultCode.space_length_val;
 			} else if(!name.match(regName)) { //3. 유효한 이름
-				return this.resultCode.inavlid_name;
+				return this.resultCode.invalid_name;
 			} else if(name.length < 2 || name.length > 20) { // 3. 2~20자
 				return this.resultCode.length_name;
 			} else {
